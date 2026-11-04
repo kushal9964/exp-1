@@ -42,7 +42,7 @@ class Database{
         }
 
         void LOAD(){
-
+            
             map.clear();
 
             ifstream inFile(filename);
@@ -60,17 +60,27 @@ class Database{
             inFile.close();
         }
 
+        size_t SIZE(){
+            return map.size();
+        }
+
+        void KEYS(){
+            for(const auto &p:map){
+                cout<<p.first<<endl;
+            }
+            cout<<endl;
+        }
+
         void SAVE(){
             ofstream outFile(filename);
-
-            for(auto it = map.begin();it!=map.end();++it){
-                outFile << it->first << " " << it->second << "\n";
+            for(const auto &p:map){
+                outFile << p.first << " " << p.second << "\n";
             }
             outFile.close();
         }
         
         void SHOW(){
-            for(auto pairs:map){
+            for(const auto &pairs:map){
                 cout<<pairs.first<<"-->"<<pairs.second<<"\n";
             }
 
@@ -99,7 +109,7 @@ int main(){
                 }
             }
             else{
-                row += toupper(cmd[i]);
+                row += cmd[i];
             }
         }
 
@@ -109,6 +119,10 @@ int main(){
 
         if(tokens.empty()){
             continue;
+        }
+
+        for(char &c:tokens[0]) {
+             c = toupper(static_cast<unsigned char>(c));
         }
 
         if(tokens[0] == "PUT"){
@@ -148,6 +162,14 @@ int main(){
 
         else if(tokens[0] == "SHOW"){
             db.SHOW();
+        }
+
+        else if(tokens[0] == "SIZE"){
+            cout << db.SIZE() << endl;
+        }
+
+        else if(tokens[0] == "KEYS"){
+            db.KEYS();
         }
 
         else if(tokens[0] == "SAVE"){
