@@ -97,14 +97,19 @@ int main(){
         string cmd;
         vector<string> tokens;
         string row;
-        
+        int cnt =0;
         cout<<">>";
         getline(cin,cmd);
 
         for(int i=0;i<cmd.size();i++){
+            if(cnt==2){
+                tokens.push_back(cmd.substr(i));
+                break;
+            }
             if(cmd[i]==' '){
                 if(!row.empty()){
                     tokens.push_back(row);
+                    cnt++;
                     row.clear();
                 }
             }
